@@ -1,19 +1,14 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-#京东抽奖机
-#活动入口：京东APP中各种抽奖活动的汇总
-#自用
-#author：yangtingxiao
-#github： https://github.com/yangtingxiao
 
-name: 冬瓜抽奖机
+name: 东瓜试用
 
 on:
     # push:
     #     branches:
     #         - main
     schedule:
-        - cron: "30 3 * * *"
+        - cron: " 3 2 * * *"
     workflow_dispatch:
 jobs:
     build:
@@ -28,12 +23,12 @@ jobs:
             - name: npm install
               run: |
                   npm install
-            - name: "运行 【冬瓜抽奖机】"
+            - name: "运行 【动瓜试用】"
               run: |
                   node Ponysitters_Club_Season.js
               env:
                   JD_COOKIE: ${{ secrets.JD_COOKIE }}
-                  SYNCURL: https://raw.githubusercontent.com/dajijiyangmao/UFO/main/HAOYANGMAO/The.Flash/The.Flash/j00d_lo0ttery0Ma0chine.js
+                  SYNCURL: https://raw.githubusercontent.com/ZCY01/daily_scripts/main/jd/jd_try.js
                   SCKEY: ${{ secrets.SCKEY }}
                   BARK_PUSH: ${{ secrets.BARK_PUSH }}
                   PUSH_KEY: ${{ secrets.PUSH_KEY }}

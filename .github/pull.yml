@@ -1,5 +1,5 @@
 version: "1"
 rules:
   - base: main
-    upstream: dajijiyangmao:main
+    upstream: canghaiyishengxiao2021:main
     mergeMethod: hardreset

@@ -1,19 +1,14 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-#京东抽奖机
-#活动入口：京东APP中各种抽奖活动的汇总
-#自用
-#author：yangtingxiao
-#github： https://github.com/yangtingxiao
 
-name: 冬瓜抽奖机
+name: 西红柿看看
 
 on:
     # push:
     #     branches:
     #         - main
     schedule:
-        - cron: "30 3 * * *"
+        - cron: "10 0,2,4,6,8 * * *"
     workflow_dispatch:
 jobs:
     build:
@@ -28,15 +23,20 @@ jobs:
             - name: npm install
               run: |
                   npm install
-            - name: "运行 【冬瓜抽奖机】"
+            - name: "运行 【西红柿看看】"
               run: |
-                  node Ponysitters_Club_Season.js
+                  node fqkk.js
               env:
                   JD_COOKIE: ${{ secrets.JD_COOKIE }}
-                  SYNCURL: https://raw.githubusercontent.com/dajijiyangmao/UFO/main/HAOYANGMAO/The.Flash/The.Flash/j00d_lo0ttery0Ma0chine.js
+                  fqkkurl: ${{ secrets.fqkkurl }}
+                  fqkkhd: ${{ secrets.fqkkhd }}
+                  fqkkcount: ${{ secrets.fqkkcount }}
+                  fqkkxh: ${{ secrets.fqkkxh }}
+                  fqtx: ${{ secrets.fqtx }}
                   SCKEY: ${{ secrets.SCKEY }}
                   BARK_PUSH: ${{ secrets.BARK_PUSH }}
                   PUSH_KEY: ${{ secrets.PUSH_KEY }}
                   TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
                   TG_USER_ID: ${{ secrets.TG_USER_ID }}
                   EFORK: ${{ secrets.EFORK }}
+                  

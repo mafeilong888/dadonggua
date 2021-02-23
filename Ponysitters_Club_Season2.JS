@@ -26,28 +26,54 @@ const exec = require("child_process").execSync;
 const fs = require("fs");
 const download = require("download");
 
-// 公共变量
-const JD_COOKIE = process.env.JD_COOKIE; //cokie,多个用&隔开即可
-const SyncUrl = process.env.SYNCURL; //签到地址,方便随时变动
+
+const JD_COOKIE = process.env.JD_COOKIE; //格式格式格式三遍
+const SyncUrl = process.env.SYNCURL; //
+const Efork = process.env.EFORK; //
+const SCKEY = process.env.SCKEY; //SEVER-酱油
+const BARK_PUSH = process.env.BARK_PUSH; //
+const PUSH_KEY = process.env.PUSH_KEY; //
+const TG_BOT_TOKEN = process.env.TG_BOT_TOKEN; //TG通知比较好用
+const TG_USER_ID = process.env.TG_USER_ID; //
+ 
+//个别参数 懂的自己加
+const JOY_FEED_COUNT = process.env.JOY_FEED_COUNT; //宠汪汪🐕喂食
+const JXNCTOKENS = process.env.JXNCTOKENS; //京戏农场种子
+
+
+
+
+
+
+
+
+
+
 
 let CookieJDs = [];
-
+let shareCodes=[];
 async function downFile() {
-     console.log("开始下载"+SyncUrl+"代码");
+   
     await download(SyncUrl, "./",{filename:'temp.js'});
 }
 
 async function changeFiele(content, cookie) {
-    console.log(JSON.stringify(process.env))
+
      let newContent = content.replace("require('./jdCookie.js')", JSON.stringify({ CookieJD: cookie }));
-     newContent = newContent.replace("GITHUB","UUUUUUUSSSSSAAAAA");
-    //await fs.writeFileSync("./Ponysitters_Club_Season.js", newContent, "utf8");
      
-newContent = newContent.replace(/require\('.\/(\w+)ShareCodes.js\'\)/g, '[]'); 
-
-
-
-     await fs.writeFileSync( './temp.js', newContent, 'utf8')
+     newContent = newContent.replace(`require("./jdCookie.js")`, JSON.stringify({ CookieJD: cookie }));
+     
+     newContent = newContent.replace(`require('./jdCookie.js')`, JSON.stringify({ CookieJD: cookie }));
+          
+     newContent = newContent.replace(Efork,'Efork');
+    
+    newContent = newContent.replace(/require\('.\/(\w+)ShareCodes.js\'\)/g, JSON.stringify(shareCodes)); 
+ 
+    newContent =newContent.replace(/var Key = ''/, `var Key = '${cookie}'`);
+ 
+   
+     
+      await fs.writeFileSync( './temp.js', newContent, 'utf8')
     
 }
 
@@ -56,29 +82,40 @@ async function executeOneByOne() {
     for (var i = 0; i < CookieJDs.length; i++) {
         console.log(`正在执行第${i + 1}个账号签到任务`);
         changeFiele(content, CookieJDs[i]);
-        console.log("替换变量完毕");
-        //await exec("node Ponysitters_Club_Season.js", { stdio: "inherit" });
+ 
         await exec("node temp.js >> result.txt");
-        console.log("执行完毕");
+       
     }
 }
 
 async function start() {
     if (!JD_COOKIE) {
-        console.log("请填写 JD_COOKIE 后在继续");
+        
         return;
     }
-    if (!SyncUrl) {
-        console.log("请填写 SYNCURL 后在继续");
+   if (!SyncUrl) {
+     
+        return;
+    }
+    if (!Efork) {
+     
         return;
     }
   
+ console.log('SyncUrl'+SyncUrl)
+   if (SyncUrl) {
+   if (SyncUrl.indexOf(".js")>0) {
+     hcodestr=SyncUrl.substr(SyncUrl.indexOf(".js")-4,4)+"_CODE";   }
+
+}
+ 
   
+     
     CookieJDs = JD_COOKIE.split("&");
     console.log(`当前共${CookieJDs.length}个账号需要签到`);
-    // 下载最新代码
+    
     await downFile();
-    console.log("下载代码完毕");
+  
     await executeOneByOne();
     const path = "./result.txt";
     let content = "";
